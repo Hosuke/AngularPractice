@@ -8,7 +8,7 @@
 <body>
 
     <div ng-app="behaviorApp">
-        <div enter leave>I'm content!</div>
+        <div enter="panel" leave>I'm content!</div>
     </div>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
@@ -17,16 +17,18 @@
         var app = angular.module("behaviorApp", []);
 
         app.directive("enter", function() {
-            return function(scope, element) {
+            return function(scope, element, attrs) {
                 element.bind("mouseenter", function() {
+                    element.addClass(attrs.enter);
                     console.log("I'm inside of you!");
                 });
             };
         });
 
         app.directive("leave", function() {
-            return function(scope, element) {
+            return function(scope, element, attrs) {
                 element.bind("mouseleave", function() {
+                    element.removeClass(attrs.enter);
                     console.log("I'm leaving on a jet plane!");
                 });
             };
