@@ -39,6 +39,55 @@ angular.module('Eggly', [
         $scope.isCurrentCategory = isCurrentCategory;
         $scope.setCurrentCategory = setCurrentCategory;
 
+
+        //-------------------------------------------------------------------------------------------------
+        // CRUD: CREATE UPDATE AND DELETE
+        //-------------------------------------------------------------------------------------------------
+        $scope.editedBookmark = null;
+
+        function setEdittedBookmark(bookmark){
+            $scope.editedBookmark = angular.copy(bookmark);
+        }
+
+        function updateBookmark(bookmark){
+            var index = _.findIndex($scope.bookmarks, function(b){
+                return b.id == bookmark.id;
+            });
+            $scope.bookmarks[index] = bookmark;
+            $scope.editedBookmark = null;
+            $scope.isEditing = false;
+        }
+
+        function createBookmark(bookmark){
+            bookmark.id = $scope.bookmarks.length;
+            $scope.bookmarks.push(bookmark);
+
+            resetCreateForm();
+        }
+
+        function resetCreateForm(){
+            $scope.newBookmark = {
+                title: '',
+                url: '',
+                category: $scope.currentCategory
+            };
+        }
+
+        function isSelectedBookmark(bookmarkId) {
+            return $scope.editedBookmark !== null && $scope.editedBookmark.id === bookmarkId;
+        }
+
+        function deleteBookmark(bookmark) {
+            _.remove($scope.bookmarks, function(b){
+                return b.id == bookmark.id;
+            });
+        }
+
+        $scope.createBookmark = createBookmark;
+        $scope.setEdittedBookmark = setEdittedBookmark;
+        $scope.updateBookmark = updateBookmark;
+        $scope.isSelectedBookmark = isSelectedBookmark;
+        $scope.deleteBookmark = deleteBookmark;
         //-------------------------------------------------------------------------------------------------
         // CREATING AND EDITING STATES
         //-------------------------------------------------------------------------------------------------
@@ -49,6 +98,8 @@ angular.module('Eggly', [
         function startCreating() {
             $scope.isCreating = true;
             $scope.isEditing = false;
+
+            resetCreateForm();
         }
 
         function cancelCreating() {
