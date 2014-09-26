@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="utf-8">
+  <title>$scope vs scope</title>
+  <link rel="stylesheet" href="../vendor/foundation/foundation.min.css">
+</head>
+<body>
+
+  <div ng-app="app">
+    <div ng-controller="MyCtrl">
+        <div my-directive></div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js"></script>
+  <script type="text/javascript">
+    var app = angular.module("app", []);
+
+    app.controller("MyCtrl", ['$scope', '$http', function(b, a) {
+        console.log(b);
+    }]);
+
+    app.directive("myDirective", function($http, $parse) {
+        return {
+            link: function(scope, element, attrs) {
+                console.log(scope);
+            }
+        };
+    });
+  </script>
+</body>
+</html>
