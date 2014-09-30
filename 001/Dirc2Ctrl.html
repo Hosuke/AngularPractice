@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="utf-8">
+  <title>Dirc2Ctrl</title>
+  <link rel="stylesheet" href="../vendor/foundation/foundation.min.css">
+</head>
+<body>
+
+  <div ng-app="twitterApp">
+    <div ng-controller="AppCtrl">
+      <div enter="deleteTweets()">Roll over to load more tweets</div>
+  </div>
+</div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+<script type="text/javascript">
+  var app = angular.module("twitterApp", []);
+
+  app.controller("AppCtrl", function($scope) {
+    $scope.loadMoreTweets = function() {
+      alert("Loading tweets!");
+  };
+
+  $scope.deleteTweets = function() {
+      alert("deleting tweets");
+  };
+});
+
+  app.directive("enter", function() {
+    return function(scope, element, attrs) {
+      element.bind("mouseenter", function() {
+        scope.$apply(attrs.enter);
+    });
+  };
+});
+</script>
+</body>
+</html>
